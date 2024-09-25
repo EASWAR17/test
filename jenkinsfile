@@ -7,7 +7,7 @@ pipeline {
                 
                 echo 'Building...'
                 
-                echo "Build completed successfully"'
+                echo "Build completed successfully"
             }
         }
         
