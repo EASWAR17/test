@@ -5,7 +5,7 @@ pipeline {
         SONARQUBE_SERVER = 'http://54.82.5.3:9000'
         SONARQUBE_PROJECT_KEY = 'my_project'
         SONARQUBE_PROJECT_NAME = 'My Project'
-        SONARQUBE_TOKEN = squ_66828cb0623f706990a244f17579b8ed2dac6291 // Assuming you have the SonarQube token stored in Jenkins credentials
+        SONARQUBE_TOKEN = 'squ_66828cb0623f706990a244f17579b8ed2dac6291'
     }
 
     stages {
