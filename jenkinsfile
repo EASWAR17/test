@@ -2,33 +2,28 @@ pipeline {
     agent any
 
     environment {
-        // Define environment variables for SonarQube
         SONARQUBE_SERVER = 'http://54.82.5.3:9000'
         SONARQUBE_PROJECT_KEY = 'my_project'
         SONARQUBE_PROJECT_NAME = 'My Project'
-        SONARQUBE_TOKEN = 'squ_66828cb0623f706990a244f17579b8ed2dac6291'
+        SONARQUBE_TOKEN = squ_66828cb0623f706990a244f17579b8ed2dac6291 // Assuming you have the SonarQube token stored in Jenkins credentials
     }
 
     stages {
-        stage('Checkout Code') {
-            steps {
-                // Checkout your code from SCM (e.g., Git)
-                git 'https://github.com/EASWAR17/devops_test.git'
-            }
-        }
-
         stage('Run SonarQube Scan') {
             steps {
                 script {
-                    // Run SonarScanner
-                    sh """
-                    sonar-scanner \
-                        -Dsonar.projectKey=${SONARQUBE_PROJECT_KEY} \
-                        -Dsonar.projectName=${SONARQUBE_PROJECT_NAME} \
-                        -Dsonar.sources=. \
-                        -Dsonar.host.url=${SONARQUBE_SERVER} \
-                        -Dsonar.login=${SONARQUBE_TOKEN}
-                    """
+                    // Change directory to where the source code is located
+                    dir('/var/jenkins_home/test/index.html') {
+                        // Run SonarScanner
+                        sh """
+                        sonar-scanner \
+                            -Dsonar.projectKey=${SONARQUBE_PROJECT_KEY} \
+                            -Dsonar.projectName=${SONARQUBE_PROJECT_NAME} \
+                            -Dsonar.sources=. \
+                            -Dsonar.host.url=${SONARQUBE_SERVER} \
+                            -Dsonar.login=${SONARQUBE_TOKEN}
+                        """
+                    }
                 }
             }
         }
@@ -48,7 +43,6 @@ pipeline {
 
     post {
         always {
-            // Clean up or notify as needed
             echo 'Pipeline completed.'
         }
     }
