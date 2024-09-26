@@ -2,14 +2,16 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Check SonarScanner Installation') {
             steps {
-                
-                echo 'Building...'
-                
-                echo "Build completed successfully"
+                sh 'sonar-scanner -v'  // Check if SonarScanner is installed and display the version
             }
         }
-        
+    }
+
+    post {
+        always {
+            echo "SonarScanner verification completed."
+        }
     }
 }
