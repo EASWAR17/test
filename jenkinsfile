@@ -13,7 +13,7 @@ pipeline {
             steps {
                 script {
                     // Change directory to where the source code is located
-                    dir('/var/jenkins_home/test/index.html') {
+                    dir('/var/jenkins_home/test/') {
                         // Run SonarScanner
                         sh """
                         sonar-scanner \
