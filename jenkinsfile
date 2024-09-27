@@ -11,7 +11,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 // Clone the GitHub repository containing index.html
-                git 'https://github.com/EASWAR17/test.git' // Replace with your repository URL
+                git branch: 'main', url: 'https://github.com/EASWAR17/test.git'
             }
         }
 
