@@ -21,9 +21,9 @@ pipeline {
                     // Run the SonarQube scanner
                     sh """
                         sonar-scanner \
-                        -Dsonar.projectKey='My Project' \ 
+                        -Dsonar.projectKey='My Project' \
                         -Dsonar.sources=. \
-                        -Dsonar.inclusions='index.html' \ 
+                        -Dsonar.inclusions='index.html' \
                         -Dsonar.host.url=${SONARQUBE_URL} \
                         -Dsonar.login=${SONAR_TOKEN}
                     """
