@@ -1,14 +1,44 @@
 pipeline {
     agent any
+
     environment {
+        SONAR_TOKEN = 'squ_66828cb0623f706990a244f17579b8ed2dac6291'
+        SONARQUBE_URL = 'http://34.236.154.196:9000/'
         PATH = "/opt/sonar-scanner/bin:${env.PATH}"
     }
+
     stages {
-        stage('Check SonarScanner Installation') {
+        stage('Checkout Code') {
             steps {
-                sh 'sonar-scanner -v'
+                // Clone the GitHub repository containing index.html
+                git 'https://github.com/EASWAR17/test.git' // Replace with your repository URL
             }
         }
-        // Other stages...
+
+        stage('SonarQube Scan') {
+            steps {
+                script {
+                    // Run the SonarQube scanner
+                    sh """
+                        sonar-scanner \
+                        -Dsonar.projectKey=My Project \ 
+                        -Dsonar.sources=. \
+                        -Dsonar.host.url=${SONARQUBE_URL} \
+                        -Dsonar.login=${SONAR_TOKEN}
+                    """
+                }
+            }
+        }
+
+        // Other stages can be added here
+    }
+
+    post {
+        success {
+            echo 'SonarQube scan completed successfully!'
+        }
+        failure {
+            echo 'SonarQube scan failed!'
+        }
     }
 }
