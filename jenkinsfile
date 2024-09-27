@@ -1,17 +1,14 @@
 pipeline {
     agent any
-
+    environment {
+        PATH = "/opt/sonar-scanner/bin:${env.PATH}"
+    }
     stages {
         stage('Check SonarScanner Installation') {
             steps {
-                sh 'sonar-scanner -v'  // Check if SonarScanner is installed and display the version
+                sh 'sonar-scanner -v'
             }
         }
-    }
-
-    post {
-        always {
-            echo "SonarScanner verification completed."
-        }
+        // Other stages...
     }
 }
