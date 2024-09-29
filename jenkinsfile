@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        SONAR_TOKEN = 'squ_66828cb0623f706990a244f17579b8ed2dac629'
+        SONAR_TOKEN = ''
         SONARQUBE_URL = 'http://34.236.154.196:9000/'
         PATH = "/opt/sonar-scanner/bin:${env.PATH}"
     }
