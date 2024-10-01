@@ -31,7 +31,35 @@ sonar.login=squ_66828cb0623f706990a244f17579b8ed2dac6291
             }
         }
 
-        // Other stages can be added here
+        stage('SonarQube Quality Gate analysis') {
+            steps {
+                script {
+                    def projectKey = 'my_project'
+                   
+                    def sonarUser = 'admin'
+                    def sonarPassword = 'admin123'
+                   
+                    def response = sh(script: """
+                        curl -u ${sonarUser}:${sonarPassword} "${SONARQUBE_URL}/api/qualitygates/project_status?projectKey=${projectKey}"
+                    """, returnStdout: true).trim()
+                    
+                    echo "Raw API Response: ${response}"
+                   
+                    def jsonResponse = readJSON text: response
+                    def GateStatus = jsonResponse.projectStatus.status
+                    
+                    echo "Quality Gate Status: ${qualityGateStatus}"
+                    
+                    if (GateStatus == 'NONE') {
+                        error "Quality gate status is 'NONE'. Please check SonarQube configuration."
+                    } else if (GateStatus != 'OK') {
+                        error "Quality gate failed: ${qualityGateStatus}"
+                    } else {
+                        echo "Quality gate passed"
+                    }
+                }
+            }
+        }
     }
 
     post {
